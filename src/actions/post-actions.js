@@ -81,10 +81,12 @@ export const fetchPost = (id) => dispatch => {
   dispatch(toggleLoading())
 
   return getPostById(id)
-    .then(post => getPostComments(id)
+    .then(post => {
+      post.error = !post || !post.id || post.deleted ? 'notfound' : ''
+      return getPostComments(id)
         .then(comments => dispatch(receivePost(post, comments)))
         .then(() => dispatch(toggleLoading()))
-    )
+    })
 }
 
 export const createPost = (post) => dispatch => {

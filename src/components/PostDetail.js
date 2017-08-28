@@ -5,16 +5,21 @@ import { fetchPost } from '../actions/post-actions'
 import Post from './Post'
 import CreateComment from './CreateComment'
 import ListComments from './ListComments'
+import NotFound from './NotFound'
 
 class PostDetail extends Component {
 
+  retrievePost = (id) => {
+    this.props.getPost(id)
+  }
+
   componentDidMount() {
-      this.props.getPost(this.props.match.params.post_id)
+      this.retrievePost(this.props.match.params.post_id)
   }
 
   componentWillReceiveProps(newProps) {
     if (this.props.match.params.post_id !== newProps.match.params.post_id) {
-      this.props.getPost(newProps.match.params.post_id)
+      this.retrievePost(newProps.match.params.post_id)
     }
   }
 
@@ -27,6 +32,9 @@ class PostDetail extends Component {
 
     return (
       <div>
+        {post.error === 'notfound'
+        ? <NotFound/>
+        : (
         <div className="row medium-8 large-7 columns">
           <div className="row">
             <div className="small-12 columns">
@@ -39,6 +47,7 @@ class PostDetail extends Component {
           <CreateComment postId={post.id}/>
           <ListComments comments={comments}/>
         </div>
+        )}
       </div>
     )
   }

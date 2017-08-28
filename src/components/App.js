@@ -4,6 +4,7 @@ import NavHeader from './NavHeader'
 import ListPosts from './ListPosts'
 import PostDetail from './PostDetail'
 import PostForm from './PostForm'
+import NotFound from './NotFound'
 
 class App extends Component {
 
@@ -16,8 +17,10 @@ class App extends Component {
           <Route exact path="/create/:category" component={PostForm} />
           <Route exact path="/create" component={PostForm} />
           <Route exact path="/edit/:post_id" component={PostForm} />
+          <Route path='/notfound' component={NotFound} />
           <Route path="/:category/:post_id" component={PostDetail} />
           <Route path="/:category" component={ListPosts} />
+          <Route component={NotFound} />
         </Switch>
       </div>
     )
